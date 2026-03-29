@@ -25,10 +25,14 @@ export default function WordReveal({
     const el = containerRef.current;
     if (!el) return;
 
+    const reveal = () => {
+      el.classList.add("word-reveal-visible");
+    };
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          el.classList.add("word-reveal-visible");
+          reveal();
           observer.unobserve(el);
         }
       },
@@ -36,6 +40,16 @@ export default function WordReveal({
     );
 
     observer.observe(el);
+
+    // Fallback: if element is already in viewport on mount, reveal after a tick
+    requestAnimationFrame(() => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        reveal();
+        observer.unobserve(el);
+      }
+    });
+
     return () => observer.disconnect();
   }, [threshold]);
 

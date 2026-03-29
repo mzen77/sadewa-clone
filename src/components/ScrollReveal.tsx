@@ -27,11 +27,15 @@ export default function ScrollReveal({
     const el = ref.current;
     if (!el) return;
 
+    const reveal = () => {
+      el.style.transitionDelay = `${delay}s`;
+      el.classList.add("scroll-revealed");
+    };
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          el.style.transitionDelay = `${delay}s`;
-          el.classList.add("scroll-revealed");
+          reveal();
           if (once) observer.unobserve(el);
         } else if (!once) {
           el.classList.remove("scroll-revealed");
@@ -41,6 +45,16 @@ export default function ScrollReveal({
     );
 
     observer.observe(el);
+
+    // Fallback: if element is already in viewport on mount, reveal after a tick
+    requestAnimationFrame(() => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        reveal();
+        if (once) observer.unobserve(el);
+      }
+    });
+
     return () => observer.disconnect();
   }, [delay, threshold, once]);
 
