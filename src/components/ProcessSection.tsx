@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import ScrollReveal from "./ScrollReveal";
 
 interface ProcessStep {
   number: string;
@@ -48,65 +49,57 @@ const STEPS: ProcessStep[] = [
 function StepRow({
   step,
   isFirst,
+  index,
 }: {
   step: ProcessStep;
   isFirst: boolean;
+  index: number;
 }) {
   return (
-    <div
-      style={{
-        paddingTop: isFirst ? 0 : 80,
-        paddingBottom: 80,
-        borderTop: isFirst ? "none" : "1px solid #E5E5E5",
-      }}
-    >
+    <ScrollReveal delay={0.15 * index}>
       <div
-        className="grid items-center gap-10"
-        style={{ gridTemplateColumns: "1fr 1fr" }}
+        style={{
+          paddingTop: isFirst ? 0 : 80,
+          paddingBottom: 80,
+          borderTop: isFirst ? "none" : "1px solid #E5E5E5",
+        }}
       >
-        {/* Left: number + illustration */}
-        <div className="flex flex-col items-center gap-4">
-          <span
-            className="font-sans"
-            style={{
-              fontSize: 64,
-              fontWeight: 700,
-              color: "#D3D3D3",
-            }}
-          >
-            {step.number}
-          </span>
-          <Image
-            src={step.image}
-            alt={step.imageAlt}
-            width={300}
-            height={300}
-            className="object-contain"
-            style={{ maxWidth: 300 }}
-          />
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
+          {/* Left: number + illustration */}
+          <div className="flex flex-col items-center gap-4">
+            <span
+              className="font-sans"
+              style={{
+                fontSize: 64,
+                fontWeight: 700,
+                color: "#D3D3D3",
+              }}
+            >
+              {step.number}
+            </span>
+            <Image
+              src={step.image}
+              alt={step.imageAlt}
+              width={300}
+              height={300}
+              className="object-contain"
+              style={{ maxWidth: 300 }}
+            />
+          </div>
 
-        {/* Right: heading + description */}
-        <div>
-          <h3 className="heading-lg text-primary mb-6">{step.heading}</h3>
-          <p
-            className="body-sm text-primary"
-            style={{ maxWidth: 400, fontWeight: 500 }}
-          >
-            {step.description}
-          </p>
+          {/* Right: heading + description */}
+          <div>
+            <h3 className="heading-lg text-primary mb-6">{step.heading}</h3>
+            <p
+              className="body-sm text-primary"
+              style={{ maxWidth: 400, fontWeight: 500 }}
+            >
+              {step.description}
+            </p>
+          </div>
         </div>
       </div>
-
-      {/* Mobile stacked */}
-      <style jsx>{`
-        @media (max-width: 768px) {
-          div[style*="gridTemplateColumns"] {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
-    </div>
+    </ScrollReveal>
   );
 }
 
@@ -116,20 +109,13 @@ export default function ProcessSection() {
       className="mx-auto bg-white"
       style={{ maxWidth: 1440, padding: "80px 80px" }}
     >
-      <p className="label text-primary mb-12">OUR APPROACH</p>
+      <ScrollReveal>
+        <p className="label text-primary mb-12">OUR APPROACH</p>
+      </ScrollReveal>
 
       {STEPS.map((step, index) => (
-        <StepRow key={step.number} step={step} isFirst={index === 0} />
+        <StepRow key={step.number} step={step} isFirst={index === 0} index={index} />
       ))}
-
-      {/* Responsive overrides */}
-      <style jsx>{`
-        @media (max-width: 768px) {
-          section {
-            padding: 40px 20px !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }

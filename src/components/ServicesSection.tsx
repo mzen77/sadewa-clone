@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import ScrollReveal from "./ScrollReveal";
 
 const SERVICES = [
   {
@@ -37,50 +40,59 @@ interface ServiceCardProps {
   title: string;
   description: string;
   image: string;
+  index: number;
 }
 
-function ServiceCard({ title, description, image }: ServiceCardProps) {
+function ServiceCard({ title, description, image, index }: ServiceCardProps) {
   return (
-    <div style={{ borderTop: "1px solid #E5E5E5", padding: "40px 20px" }}>
-      <div className="relative mb-6" style={{ height: 200 }}>
-        <Image
-          src={image}
-          alt={title}
-          fill
-          className="object-contain"
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        />
+    <ScrollReveal delay={0.1 * index}>
+      <div
+        className="group cursor-pointer"
+        style={{ borderTop: "1px solid #E5E5E5", padding: "40px 20px" }}
+      >
+        <div className="relative mb-6 overflow-hidden" style={{ height: 200 }}>
+          <Image
+            src={image}
+            alt={title}
+            fill
+            className="object-contain transition-transform duration-500 group-hover:scale-110"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
+        </div>
+        <h3 className="heading-sm text-primary mb-3">{title}</h3>
+        <p className="body-sm text-primary">{description}</p>
       </div>
-      <h3 className="heading-sm text-primary mb-3">{title}</h3>
-      <p className="body-sm text-primary">{description}</p>
-    </div>
+    </ScrollReveal>
   );
 }
 
 export default function ServicesSection() {
   return (
-    <section className="bg-white" style={{ padding: 80 }}>
+    <section id="services" className="bg-white" style={{ padding: 80 }}>
       <div className="mx-auto" style={{ maxWidth: 1440 }}>
         {/* Header row */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-8">
-          <div>
-            <p className="label text-primary mb-4">OUR SERVICES</p>
-            <h2 className="heading-lg text-primary">Automation solutions</h2>
+        <ScrollReveal>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-8">
+            <div>
+              <p className="label text-primary mb-4">OUR SERVICES</p>
+              <h2 className="heading-lg text-primary">Automation solutions</h2>
+            </div>
+            <p className="body-sm text-primary" style={{ maxWidth: 400 }}>
+              Our AI-driven automation eliminates busywork, streamlines your
+              operations, and helps your business grow, without extra effort.
+            </p>
           </div>
-          <p className="body-sm text-primary" style={{ maxWidth: 400 }}>
-            Our AI-driven automation eliminates busywork, streamlines your
-            operations, and helps your business grow, without extra effort.
-          </p>
-        </div>
+        </ScrollReveal>
 
         {/* Service cards grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
-          {SERVICES.map((service) => (
+          {SERVICES.map((service, i) => (
             <ServiceCard
               key={service.title}
               title={service.title}
               description={service.description}
               image={service.image}
+              index={i}
             />
           ))}
         </div>

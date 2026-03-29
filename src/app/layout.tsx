@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto_Mono } from "next/font/google";
 import localFont from "next/font/local";
+import SmoothScroll from "@/components/SmoothScroll";
 import "./globals.css";
 
 const satoshi = localFont({
@@ -34,9 +35,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${satoshi.variable} ${robotoMono.variable} antialiased`}
+      className={`${satoshi.variable} ${robotoMono.variable} antialiased lenis`}
     >
-      <body className="min-h-full bg-white text-primary">{children}</body>
+      <body className="min-h-full bg-white text-primary">
+        <SmoothScroll />
+        {children}
+      </body>
     </html>
   );
 }

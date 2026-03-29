@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import ScrollReveal from "./ScrollReveal";
 
 function ArrowUpRight() {
   return (
@@ -68,75 +70,65 @@ const CASE_STUDIES: CaseStudy[] = [
   },
 ];
 
-function CaseStudyCard({ study }: { study: CaseStudy }) {
+function CaseStudyCard({ study, index }: { study: CaseStudy; index: number }) {
   return (
-    <div
-      className="bg-primary"
-      style={{ borderRadius: 24, padding: 48, marginBottom: 32 }}
-    >
+    <ScrollReveal delay={0.2 * index}>
       <div
-        className="grid items-center gap-10"
-        style={{ gridTemplateColumns: "1fr 1fr" }}
+        className="bg-primary"
+        style={{ borderRadius: 24, padding: 48, marginBottom: 32 }}
       >
-        {/* Text side */}
-        <div className="flex flex-col gap-6">
-          {/* Badge + year */}
-          <div className="flex items-center gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
+          {/* Text side */}
+          <div className="flex flex-col gap-6">
+            {/* Badge + year */}
+            <div className="flex items-center gap-3">
+              <Image
+                src={study.badgeImage}
+                alt={study.badgeAlt}
+                width={40}
+                height={40}
+                className="rounded-full"
+              />
+              <span className="font-mono text-[14px] font-normal uppercase text-white">
+                {study.year}
+              </span>
+            </div>
+
+            {/* Title */}
+            <h3 className="heading-md text-white">{study.title}</h3>
+
+            {/* Metrics row */}
+            <div className="flex items-start gap-8 mt-4">
+              {study.metrics.map((metric) => (
+                <div key={metric.label} className="flex flex-col gap-1">
+                  <span
+                    className="font-sans text-white"
+                    style={{ fontSize: 32, fontWeight: 500 }}
+                  >
+                    {metric.value}
+                  </span>
+                  <span className="font-mono text-[12px] font-normal uppercase text-white">
+                    {metric.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Image side */}
+          <div className="flex justify-end">
             <Image
-              src={study.badgeImage}
-              alt={study.badgeAlt}
-              width={40}
-              height={40}
-              className="rounded-full"
+              src={study.image}
+              alt={study.imageAlt}
+              width={560}
+              height={380}
+              className="w-full h-auto object-cover"
+              style={{ borderRadius: 16, maxWidth: "100%" }}
             />
-            <span className="font-mono text-[14px] font-normal uppercase text-white">
-              {study.year}
-            </span>
           </div>
-
-          {/* Title */}
-          <h3 className="heading-md text-white">{study.title}</h3>
-
-          {/* Metrics row */}
-          <div className="flex items-start gap-8 mt-4">
-            {study.metrics.map((metric) => (
-              <div key={metric.label} className="flex flex-col gap-1">
-                <span
-                  className="font-sans text-white"
-                  style={{ fontSize: 32, fontWeight: 500 }}
-                >
-                  {metric.value}
-                </span>
-                <span className="font-mono text-[12px] font-normal uppercase text-white">
-                  {metric.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Image side */}
-        <div className="flex justify-end">
-          <Image
-            src={study.image}
-            alt={study.imageAlt}
-            width={560}
-            height={380}
-            className="w-full h-auto object-cover"
-            style={{ borderRadius: 16, maxWidth: "100%" }}
-          />
         </div>
       </div>
-
-      {/* Mobile stacked layout */}
-      <style jsx>{`
-        @media (max-width: 768px) {
-          div[style*="gridTemplateColumns"] {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
-    </div>
+    </ScrollReveal>
   );
 }
 
@@ -148,34 +140,27 @@ export default function CaseStudiesSection() {
       style={{ maxWidth: 1440, padding: "80px 80px" }}
     >
       {/* Header row */}
-      <div className="flex items-end justify-between mb-12">
-        <div>
-          <p className="label text-primary mb-4">CASE STUDIES</p>
-          <h2 className="heading-lg text-primary">Latest works</h2>
+      <ScrollReveal>
+        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-12 gap-6">
+          <div>
+            <p className="label text-primary mb-4">CASE STUDIES</p>
+            <h2 className="heading-lg text-primary">Latest works</h2>
+          </div>
+          <Link
+            href="/case-studies"
+            className="flex items-center gap-2 body-md text-primary border border-light-gray hover:bg-surface transition-colors duration-200"
+            style={{ padding: "10px 20px", borderRadius: 100 }}
+          >
+            More case studies
+            <ArrowUpRight />
+          </Link>
         </div>
-        <a
-          href="#case-studies"
-          className="flex items-center gap-2 body-md text-primary border border-light-gray hover:bg-surface transition-colors duration-200"
-          style={{ padding: "10px 20px", borderRadius: 100 }}
-        >
-          More case studies
-          <ArrowUpRight />
-        </a>
-      </div>
+      </ScrollReveal>
 
       {/* Case study cards */}
-      {CASE_STUDIES.map((study) => (
-        <CaseStudyCard key={study.year} study={study} />
+      {CASE_STUDIES.map((study, i) => (
+        <CaseStudyCard key={study.year} study={study} index={i} />
       ))}
-
-      {/* Responsive overrides */}
-      <style jsx>{`
-        @media (max-width: 768px) {
-          section {
-            padding: 40px 20px !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }

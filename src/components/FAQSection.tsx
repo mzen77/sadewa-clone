@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ScrollReveal from "./ScrollReveal";
 
 interface FAQItem {
   question: string;
@@ -58,21 +59,31 @@ function AccordionItem({
           {item.question}
         </span>
         <span
-          className="shrink-0 text-primary"
-          style={{ fontSize: 24, marginLeft: 16 }}
+          className="shrink-0 text-primary transition-transform duration-300"
+          style={{
+            fontSize: 24,
+            marginLeft: 16,
+            transform: isOpen ? "rotate(45deg)" : "none",
+          }}
           aria-hidden="true"
         >
-          {isOpen ? "\u2212" : "+"}
+          +
         </span>
       </button>
-      {isOpen && (
+      <div
+        className="overflow-hidden transition-all duration-300"
+        style={{
+          maxHeight: isOpen ? 200 : 0,
+          opacity: isOpen ? 1 : 0,
+        }}
+      >
         <p
           className="body-sm"
           style={{ color: "#3a3a3a", fontWeight: 500, marginTop: 16 }}
         >
           {item.answer}
         </p>
-      )}
+      </div>
     </div>
   );
 }
@@ -84,26 +95,30 @@ export default function FAQSection() {
     <section className="bg-white" style={{ padding: 80 }}>
       <div className="mx-auto" style={{ maxWidth: 1440 }}>
         {/* Header */}
-        <div style={{ marginBottom: 60 }}>
-          <p className="label text-primary mb-4">FAQ</p>
-          <h2 className="heading-lg text-primary">
-            Frequently Asked Questions
-          </h2>
-        </div>
+        <ScrollReveal>
+          <div style={{ marginBottom: 60 }}>
+            <p className="label text-primary mb-4">FAQ</p>
+            <h2 className="heading-lg text-primary">
+              Frequently Asked Questions
+            </h2>
+          </div>
+        </ScrollReveal>
 
         {/* Accordion */}
-        <div>
-          {FAQ_DATA.map((item, index) => (
-            <AccordionItem
-              key={item.question}
-              item={item}
-              isOpen={openIndex === index}
-              onToggle={() =>
-                setOpenIndex(openIndex === index ? -1 : index)
-              }
-            />
-          ))}
-        </div>
+        <ScrollReveal delay={0.2}>
+          <div>
+            {FAQ_DATA.map((item, index) => (
+              <AccordionItem
+                key={item.question}
+                item={item}
+                isOpen={openIndex === index}
+                onToggle={() =>
+                  setOpenIndex(openIndex === index ? -1 : index)
+                }
+              />
+            ))}
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );

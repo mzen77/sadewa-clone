@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import ScrollReveal from "./ScrollReveal";
 
 const TECH_ITEMS = [
   { number: "/01", name: "OpenAI", image: "/images/tech/openai.png" },
@@ -12,35 +15,38 @@ export default function TechStackSection() {
   return (
     <section className="bg-white" style={{ padding: "80px 40px" }}>
       <div className="mx-auto" style={{ maxWidth: 1440 }}>
-        <p className="label text-primary mb-4">TECHNOLOGIES</p>
-        <h2 className="heading-lg text-primary" style={{ marginBottom: 60 }}>
-          Tech stack we use
-        </h2>
+        <ScrollReveal>
+          <p className="label text-primary mb-4">TECHNOLOGIES</p>
+          <h2 className="heading-lg text-primary" style={{ marginBottom: 60 }}>
+            Tech stack we use
+          </h2>
+        </ScrollReveal>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-0">
-          {TECH_ITEMS.map((item) => (
-            <div
-              key={item.number}
-              style={{
-                borderTop: "1px solid #E5E5E5",
-                padding: "30px 0",
-              }}
-            >
-              <span className="label text-secondary">{item.number}</span>
+          {TECH_ITEMS.map((item, i) => (
+            <ScrollReveal key={item.number} delay={0.1 * i}>
               <div
-                className="relative"
-                style={{ height: 60, margin: "20px 0" }}
+                style={{
+                  borderTop: "1px solid #E5E5E5",
+                  padding: "30px 0",
+                }}
               >
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  fill
-                  className="object-contain object-left"
-                  sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                />
+                <span className="label text-secondary">{item.number}</span>
+                <div
+                  className="relative"
+                  style={{ height: 60, margin: "20px 0" }}
+                >
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    className="object-contain object-left"
+                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                  />
+                </div>
+                <span className="label text-primary">{item.name}</span>
               </div>
-              <span className="label text-primary">{item.name}</span>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 interface LinkItem {
   label: string;
@@ -7,22 +8,21 @@ interface LinkItem {
 
 const NAVIGATION_LINKS: LinkItem[] = [
   { label: "Home", href: "/" },
-  { label: "Services", href: "#services" },
-  { label: "Case Studies", href: "#case-studies" },
-  { label: "Blog", href: "#blog" },
-  { label: "Waitlist", href: "#waitlist" },
-  { label: "404", href: "/404" },
+  { label: "Services", href: "/#services" },
+  { label: "Case Studies", href: "/case-studies" },
+  { label: "Blog", href: "/blog" },
+  { label: "Waitlist", href: "/waitlist" },
 ];
 
 const COMPANY_LINKS: LinkItem[] = [
-  { label: "About Us", href: "#about" },
-  { label: "Careers", href: "#careers" },
-  { label: "Contact Us", href: "#contact" },
+  { label: "About Us", href: "/about-us" },
+  { label: "Careers", href: "/about-us" },
+  { label: "Contact Us", href: "/contact-us" },
 ];
 
 const LEGAL_LINKS: LinkItem[] = [
-  { label: "Terms of Services", href: "#terms" },
-  { label: "Privacy Policy", href: "#privacy" },
+  { label: "Terms of Services", href: "/legal/terms-of-service" },
+  { label: "Privacy Policy", href: "/legal/privacy-policy" },
 ];
 
 const SOCIAL_LINKS: LinkItem[] = [
@@ -46,12 +46,12 @@ function FooterLinkColumn({
       <ul className="flex flex-col gap-3">
         {links.map((link) => (
           <li key={link.label}>
-            <a
+            <Link
               href={link.href}
               className="body-sm text-white hover:opacity-70 transition-opacity duration-200"
             >
               {link.label}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
@@ -95,14 +95,14 @@ export default function Footer() {
               <FooterLinkColumn title="/COMPANY" links={COMPANY_LINKS} />
               <div style={{ marginTop: 24 }}>
                 {LEGAL_LINKS.map((link) => (
-                  <a
+                  <Link
                     key={link.label}
                     href={link.href}
                     className="body-sm text-white hover:opacity-70 transition-opacity duration-200 block"
                     style={{ marginTop: 12 }}
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>

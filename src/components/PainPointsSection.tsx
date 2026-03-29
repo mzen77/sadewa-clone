@@ -1,3 +1,7 @@
+"use client";
+
+import ScrollReveal from "./ScrollReveal";
+
 const PAIN_POINTS = [
   {
     text: "Teams spend too much time on repetitive tasks.",
@@ -48,29 +52,16 @@ export default function PainPointsSection() {
       style={{ padding: "120px 80px", minHeight: 600 }}
     >
       <div className="relative mx-auto" style={{ maxWidth: 1440 }}>
-        {/* Warning badges */}
-        {PAIN_POINTS.map((point) => (
-          <div
+        {/* Warning badges — desktop */}
+        {PAIN_POINTS.map((point, i) => (
+          <ScrollReveal
             key={point.text}
-            className={`absolute ${point.position} hidden lg:inline-flex items-center gap-2 bg-white`}
-            style={{
-              border: "1px solid #F3F3F3",
-              borderRadius: 100,
-              padding: "12px 20px",
-            }}
+            className={`absolute ${point.position} hidden lg:inline-flex`}
+            origin="scale"
+            delay={0.2 + i * 0.15}
+            duration={0.7}
           >
-            <WarningIcon />
-            <span className="body-sm text-primary whitespace-nowrap">
-              {point.text}
-            </span>
-          </div>
-        ))}
-
-        {/* Mobile badges — stacked */}
-        <div className="flex flex-col items-center gap-3 mb-10 lg:hidden">
-          {PAIN_POINTS.map((point) => (
             <div
-              key={point.text}
               className="inline-flex items-center gap-2 bg-white"
               style={{
                 border: "1px solid #F3F3F3",
@@ -79,15 +70,38 @@ export default function PainPointsSection() {
               }}
             >
               <WarningIcon />
-              <span className="body-sm text-primary">{point.text}</span>
+              <span className="body-sm text-primary whitespace-nowrap">
+                {point.text}
+              </span>
             </div>
+          </ScrollReveal>
+        ))}
+
+        {/* Mobile badges — stacked */}
+        <div className="flex flex-col items-center gap-3 mb-10 lg:hidden">
+          {PAIN_POINTS.map((point, i) => (
+            <ScrollReveal key={point.text} origin="scale" delay={0.1 + i * 0.1}>
+              <div
+                className="inline-flex items-center gap-2 bg-white"
+                style={{
+                  border: "1px solid #F3F3F3",
+                  borderRadius: 100,
+                  padding: "12px 20px",
+                }}
+              >
+                <WarningIcon />
+                <span className="body-sm text-primary">{point.text}</span>
+              </div>
+            </ScrollReveal>
           ))}
         </div>
 
         {/* Center heading */}
-        <h2 className="heading-lg text-primary mx-auto" style={{ maxWidth: 700 }}>
-          Eliminate the bottlenecks that hold you back
-        </h2>
+        <ScrollReveal delay={0.5}>
+          <h2 className="heading-lg text-primary mx-auto" style={{ maxWidth: 700 }}>
+            Eliminate the bottlenecks that hold you back
+          </h2>
+        </ScrollReveal>
       </div>
     </section>
   );

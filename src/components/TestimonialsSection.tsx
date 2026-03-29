@@ -1,5 +1,7 @@
 "use client";
 
+import ScrollReveal from "./ScrollReveal";
+
 interface Testimonial {
   quote: string;
   name: string;
@@ -27,28 +29,30 @@ const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-function TestimonialCard({ quote, name, role }: Testimonial) {
+function TestimonialCard({ quote, name, role, index }: Testimonial & { index: number }) {
   return (
-    <div>
-      <p
-        className="font-sans text-primary"
-        style={{
-          fontSize: 40,
-          lineHeight: "48px",
-          letterSpacing: "-1.8px",
-          fontWeight: 500,
-          maxWidth: 900,
-        }}
-      >
-        &ldquo;{quote}&rdquo;
-      </p>
-      <div style={{ marginTop: 32 }}>
-        <p className="heading-xs text-primary">{name}</p>
-        <p className="label text-primary" style={{ marginTop: 4 }}>
-          {role}
+    <ScrollReveal delay={0.2 * index}>
+      <div>
+        <p
+          className="font-sans text-primary"
+          style={{
+            fontSize: 40,
+            lineHeight: "48px",
+            letterSpacing: "-1.8px",
+            fontWeight: 500,
+            maxWidth: 900,
+          }}
+        >
+          &ldquo;{quote}&rdquo;
         </p>
+        <div style={{ marginTop: 32 }}>
+          <p className="heading-xs text-primary">{name}</p>
+          <p className="label text-primary" style={{ marginTop: 4 }}>
+            {role}
+          </p>
+        </div>
       </div>
-    </div>
+    </ScrollReveal>
   );
 }
 
@@ -56,9 +60,11 @@ export default function TestimonialsSection() {
   return (
     <section className="bg-white" style={{ padding: 80 }}>
       <div className="mx-auto" style={{ maxWidth: 1440 }}>
-        <p className="label text-primary" style={{ marginBottom: 40 }}>
-          TESTIMONIALS
-        </p>
+        <ScrollReveal>
+          <p className="label text-primary" style={{ marginBottom: 40 }}>
+            TESTIMONIALS
+          </p>
+        </ScrollReveal>
 
         <div className="flex flex-col">
           {TESTIMONIALS.map((testimonial, index) => (
@@ -67,6 +73,7 @@ export default function TestimonialsSection() {
                 quote={testimonial.quote}
                 name={testimonial.name}
                 role={testimonial.role}
+                index={index}
               />
               {index < TESTIMONIALS.length - 1 && (
                 <div

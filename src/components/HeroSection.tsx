@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import WordReveal from "./WordReveal";
+import ScrollReveal from "./ScrollReveal";
 
 const LOGOS = [1, 2, 3, 4, 5] as const;
 
@@ -50,141 +52,155 @@ export default function HeroSection() {
       <div className="grid grid-cols-1 md:grid-cols-[60%_40%] items-start gap-10">
         {/* Left column */}
         <div>
-          <h1 className="heading-xl text-primary">
-            Smart AI Automation for Growing Brands.
-          </h1>
+          <WordReveal
+            text="Smart AI Automation for Growing Brands."
+            className="heading-xl text-primary"
+            tag="h1"
+            staggerDelay={0.08}
+            duration={0.6}
+          />
 
           {/* Right-aligned content below heading */}
           <div className="flex flex-col items-end mt-10">
-            <p
-              className="body-lg text-primary"
-              style={{ maxWidth: 480 }}
-            >
-              Sadewa help you create custom AI agents and assistants to boost
-              productivity and unlock new growth across every team.
-            </p>
+            <ScrollReveal delay={0.6}>
+              <p
+                className="body-lg text-primary"
+                style={{ maxWidth: 480 }}
+              >
+                Sadewa help you create custom AI agents and assistants to boost
+                productivity and unlock new growth across every team.
+              </p>
+            </ScrollReveal>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center gap-4 mt-8">
-              <a
-                href="#contact"
-                className="flex items-center gap-3 font-sans text-[18px] font-medium text-white bg-primary hover:bg-primary-light transition-colors duration-200"
-                style={{ padding: "16px 28px", borderRadius: 100 }}
-              >
-                Get Free Consultation
-                <span
-                  className="flex items-center justify-center rounded-full bg-accent"
-                  style={{ width: 32, height: 32 }}
+            <ScrollReveal delay={0.8}>
+              <div className="flex flex-col sm:flex-row items-center gap-4 mt-8">
+                <a
+                  href="/contact-us"
+                  className="flex items-center gap-3 font-sans text-[18px] font-medium text-white bg-primary hover:bg-primary-light transition-colors duration-200"
+                  style={{ padding: "16px 28px", borderRadius: 100 }}
                 >
-                  <ArrowUpRight color="#131313" />
-                </span>
-              </a>
+                  Get Free Consultation
+                  <span
+                    className="flex items-center justify-center rounded-full bg-accent"
+                    style={{ width: 32, height: 32 }}
+                  >
+                    <ArrowUpRight color="#131313" />
+                  </span>
+                </a>
 
-              <a
-                href="#work"
-                className="flex items-center gap-3 font-sans text-[18px] font-medium text-primary bg-white hover:bg-surface transition-colors duration-200 border border-light-gray"
-                style={{ padding: "16px 28px", borderRadius: 100 }}
-              >
-                Work with us
-                <span
-                  className="flex items-center justify-center rounded-full bg-primary"
-                  style={{ width: 32, height: 32 }}
+                <a
+                  href="/contact-us"
+                  className="flex items-center gap-3 font-sans text-[18px] font-medium text-primary bg-white hover:bg-surface transition-colors duration-200 border border-light-gray"
+                  style={{ padding: "16px 28px", borderRadius: 100 }}
                 >
-                  <ArrowUpRight color="#FFFFFF" />
-                </span>
-              </a>
-            </div>
+                  Work with us
+                  <span
+                    className="flex items-center justify-center rounded-full bg-primary"
+                    style={{ width: 32, height: 32 }}
+                  >
+                    <ArrowUpRight color="#FFFFFF" />
+                  </span>
+                </a>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
 
         {/* Right column */}
         <div className="flex flex-col items-center gap-6">
           {/* Video thumbnail card */}
-          <div
-            className="relative overflow-hidden"
-            style={{ width: 350, borderRadius: 16 }}
-          >
-            <Image
-              src="/images/hero-video-thumb.jpg"
-              alt="Showreel video thumbnail"
-              width={350}
-              height={220}
-              className="w-full h-auto object-cover"
-              priority
-            />
-            {/* Overlay */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30">
-              <button
-                type="button"
-                aria-label="Play showreel video"
-                className="mb-3 cursor-pointer"
-              >
-                <PlayIcon />
-              </button>
-              <span
-                className="font-mono text-[14px] font-normal uppercase tracking-wide text-white"
-              >
-                /SHOWREEL
-              </span>
+          <ScrollReveal delay={0.4} origin="right">
+            <div
+              className="relative overflow-hidden"
+              style={{ width: 350, borderRadius: 16 }}
+            >
+              <Image
+                src="/images/hero-video-thumb.jpg"
+                alt="Showreel video thumbnail"
+                width={350}
+                height={220}
+                className="w-full h-auto object-cover"
+                priority
+              />
+              {/* Overlay */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30">
+                <button
+                  type="button"
+                  aria-label="Play showreel video"
+                  className="mb-3 cursor-pointer"
+                >
+                  <PlayIcon />
+                </button>
+                <span
+                  className="font-mono text-[14px] font-normal uppercase tracking-wide text-white"
+                >
+                  /SHOWREEL
+                </span>
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* 3D illustration */}
-          <Image
-            src="/images/hero-3d.png"
-            alt="3D robot illustration"
-            width={400}
-            height={400}
-            className="relative -ml-20"
-            priority
-          />
+          <ScrollReveal delay={0.6} origin="scale">
+            <Image
+              src="/images/hero-3d.png"
+              alt="3D robot illustration"
+              width={400}
+              height={400}
+              className="relative -ml-20"
+              priority
+            />
+          </ScrollReveal>
         </div>
       </div>
 
       {/* Logo marquee bar */}
-      <div className="mt-16 border-t border-light-gray pt-8">
-        <div className="flex items-center gap-8">
-          {/* Slash divider + label */}
-          <div className="flex items-center gap-3 shrink-0">
-            <span className="label text-secondary">/</span>
-            <span className="label text-secondary whitespace-nowrap">
-              TRUSTED BY 300+ COMPANIES
-            </span>
-          </div>
+      <ScrollReveal delay={0.3}>
+        <div className="mt-16 border-t border-light-gray pt-8">
+          <div className="flex items-center gap-8">
+            {/* Slash divider + label */}
+            <div className="flex items-center gap-3 shrink-0">
+              <span className="label text-secondary">/</span>
+              <span className="label text-secondary whitespace-nowrap">
+                TRUSTED BY 300+ COMPANIES
+              </span>
+            </div>
 
-          {/* Scrolling logos */}
-          <div className="overflow-hidden flex-1">
-            <div className="flex items-center animate-marquee" style={{ width: "200%" }}>
-              {/* First set */}
-              <div className="flex items-center gap-12 shrink-0" style={{ width: "50%" }}>
-                {LOGOS.map((num) => (
-                  <Image
-                    key={`logo-a-${num}`}
-                    src={`/images/logos/logo-${num}.png`}
-                    alt={`Partner logo ${num}`}
-                    width={120}
-                    height={40}
-                    className="h-8 w-auto object-contain opacity-60"
-                  />
-                ))}
-              </div>
-              {/* Duplicate set for seamless loop */}
-              <div className="flex items-center gap-12 shrink-0" style={{ width: "50%" }}>
-                {LOGOS.map((num) => (
-                  <Image
-                    key={`logo-b-${num}`}
-                    src={`/images/logos/logo-${num}.png`}
-                    alt={`Partner logo ${num}`}
-                    width={120}
-                    height={40}
-                    className="h-8 w-auto object-contain opacity-60"
-                  />
-                ))}
+            {/* Scrolling logos */}
+            <div className="overflow-hidden flex-1">
+              <div className="flex items-center animate-marquee" style={{ width: "200%" }}>
+                {/* First set */}
+                <div className="flex items-center gap-12 shrink-0" style={{ width: "50%" }}>
+                  {LOGOS.map((num) => (
+                    <Image
+                      key={`logo-a-${num}`}
+                      src={`/images/logos/logo-${num}.png`}
+                      alt={`Partner logo ${num}`}
+                      width={120}
+                      height={40}
+                      className="h-8 w-auto object-contain opacity-60"
+                    />
+                  ))}
+                </div>
+                {/* Duplicate set for seamless loop */}
+                <div className="flex items-center gap-12 shrink-0" style={{ width: "50%" }}>
+                  {LOGOS.map((num) => (
+                    <Image
+                      key={`logo-b-${num}`}
+                      src={`/images/logos/logo-${num}.png`}
+                      alt={`Partner logo ${num}`}
+                      width={120}
+                      height={40}
+                      className="h-8 w-auto object-contain opacity-60"
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </ScrollReveal>
 
     </section>
   );

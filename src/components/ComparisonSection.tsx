@@ -1,3 +1,7 @@
+"use client";
+
+import ScrollReveal from "./ScrollReveal";
+
 const SADEWA_FEATURES = [
   "Tailored custom AI agents and automation",
   "Covers strategy, build, and optimization",
@@ -68,68 +72,74 @@ export default function ComparisonSection() {
   return (
     <section className="bg-white" style={{ padding: "80px 40px" }}>
       <div className="mx-auto" style={{ maxWidth: 1440 }}>
-        <h2 className="heading-lg text-primary" style={{ marginBottom: 60 }}>
-          The difference is clear
-        </h2>
+        <ScrollReveal>
+          <h2 className="heading-lg text-primary" style={{ marginBottom: 60 }}>
+            The difference is clear
+          </h2>
+        </ScrollReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Sadewa column */}
-          <div
-            style={{
-              backgroundColor: "#131313",
-              borderRadius: 24,
-              padding: 48,
-            }}
-          >
-            <h3
+          <ScrollReveal delay={0.1} origin="left">
+            <div
               style={{
-                fontSize: 24,
-                fontWeight: 700,
-                color: "#FFFFFF",
-                marginBottom: 32,
+                backgroundColor: "#131313",
+                borderRadius: 24,
+                padding: 48,
               }}
             >
-              Sadewa
-            </h3>
-            <div className="flex flex-col" style={{ gap: 20 }}>
-              {SADEWA_FEATURES.map((feature) => (
-                <div key={feature} className="flex items-center" style={{ gap: 16 }}>
-                  <CheckIcon />
-                  <span className="body-md" style={{ color: "#FFFFFF" }}>
-                    {feature}
-                  </span>
-                </div>
-              ))}
+              <h3
+                style={{
+                  fontSize: 24,
+                  fontWeight: 700,
+                  color: "#FFFFFF",
+                  marginBottom: 32,
+                }}
+              >
+                Sadewa
+              </h3>
+              <div className="flex flex-col" style={{ gap: 20 }}>
+                {SADEWA_FEATURES.map((feature) => (
+                  <div key={feature} className="flex items-center" style={{ gap: 16 }}>
+                    <CheckIcon />
+                    <span className="body-md" style={{ color: "#FFFFFF" }}>
+                      {feature}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Other Agencies column */}
-          <div
-            style={{
-              backgroundColor: "#F3F3F3",
-              borderRadius: 24,
-              padding: 48,
-            }}
-          >
-            <h3
+          <ScrollReveal delay={0.3} origin="right">
+            <div
               style={{
-                fontSize: 24,
-                fontWeight: 700,
-                color: "#131313",
-                marginBottom: 32,
+                backgroundColor: "#F3F3F3",
+                borderRadius: 24,
+                padding: 48,
               }}
             >
-              Other Agencies
-            </h3>
-            <div className="flex flex-col" style={{ gap: 20 }}>
-              {OTHER_FEATURES.map((feature) => (
-                <div key={feature} className="flex items-center" style={{ gap: 16 }}>
-                  <XIcon />
-                  <span className="body-md text-primary">{feature}</span>
-                </div>
-              ))}
+              <h3
+                style={{
+                  fontSize: 24,
+                  fontWeight: 700,
+                  color: "#131313",
+                  marginBottom: 32,
+                }}
+              >
+                Other Agencies
+              </h3>
+              <div className="flex flex-col" style={{ gap: 20 }}>
+                {OTHER_FEATURES.map((feature) => (
+                  <div key={feature} className="flex items-center" style={{ gap: 16 }}>
+                    <XIcon />
+                    <span className="body-md text-primary">{feature}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

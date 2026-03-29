@@ -1,3 +1,7 @@
+"use client";
+
+import ScrollReveal from "./ScrollReveal";
+
 function ArrowUpRight({ color = "#FFFFFF" }: { color?: string }) {
   return (
     <svg
@@ -26,25 +30,29 @@ export default function CTASection() {
         className="mx-auto flex flex-col items-center text-center"
         style={{ maxWidth: 1440, padding: "120px 80px" }}
       >
-        <h2
-          className="heading-lg text-white"
-          style={{ maxWidth: 800 }}
-        >
-          Ready to implement AI in your business?
-        </h2>
-        <a
-          href="#contact"
-          className="flex items-center gap-3 font-sans text-[18px] font-medium text-primary bg-accent hover:opacity-90 transition-opacity duration-200"
-          style={{ marginTop: 48, padding: "16px 32px", borderRadius: 100 }}
-        >
-          Get Free Consultation
-          <span
-            className="flex items-center justify-center rounded-full bg-primary"
-            style={{ width: 32, height: 32 }}
+        <ScrollReveal>
+          <h2
+            className="heading-lg text-white"
+            style={{ maxWidth: 800 }}
           >
-            <ArrowUpRight />
-          </span>
-        </a>
+            Ready to implement AI in your business?
+          </h2>
+        </ScrollReveal>
+        <ScrollReveal delay={0.3}>
+          <a
+            href="/contact-us"
+            className="flex items-center gap-3 font-sans text-[18px] font-medium text-primary bg-accent hover:opacity-90 transition-opacity duration-200"
+            style={{ marginTop: 48, padding: "16px 32px", borderRadius: 100 }}
+          >
+            Get Free Consultation
+            <span
+              className="flex items-center justify-center rounded-full bg-primary"
+              style={{ width: 32, height: 32 }}
+            >
+              <ArrowUpRight />
+            </span>
+          </a>
+        </ScrollReveal>
       </div>
     </section>
   );
