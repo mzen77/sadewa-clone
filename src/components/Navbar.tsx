@@ -8,7 +8,7 @@ const NAV_LINKS = [
   { label: "Services", href: "/#services" },
   { label: "About Us", href: "/about-us" },
   { label: "Blog", href: "/blog" },
-  { label: "Careers", href: "/about-us" },
+  { label: "Careers", href: "/about-us#careers" },
 ] as const;
 
 function ChainLinkIcon() {
@@ -77,7 +77,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map((link) => (
             <Link
-              key={link.href}
+              key={link.label}
               href={link.href}
               className="label text-primary hover:opacity-60 transition-opacity duration-200"
             >
@@ -114,7 +114,7 @@ export default function Navbar() {
           <div className="flex flex-col gap-4">
             {NAV_LINKS.map((link) => (
               <Link
-                key={link.href}
+                key={link.label}
                 href={link.href}
                 className="label text-primary hover:opacity-60 transition-opacity duration-200"
                 onClick={() => setMenuOpen(false)}
