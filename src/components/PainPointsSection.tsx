@@ -1,24 +1,12 @@
 "use client";
 
-import ScrollReveal from "./ScrollReveal";
+import { useEffect, useRef, useState } from "react";
 
 const PAIN_POINTS = [
-  {
-    text: "Teams spend too much time on repetitive tasks.",
-    position: "top-[10%] left-[5%]",
-  },
-  {
-    text: "Leads slip away without consistent follow-up.",
-    position: "top-[10%] right-[5%]",
-  },
-  {
-    text: "Outdated workflows hurt customer experience.",
-    position: "bottom-[10%] left-[10%]",
-  },
-  {
-    text: "Scaling requires more people and higher costs.",
-    position: "bottom-[10%] right-[5%]",
-  },
+  "Teams spend too much time on repetitive tasks.",
+  "Leads slip away without consistent follow-up.",
+  "Outdated workflows hurt customer experience.",
+  "Scaling requires more people and higher costs.",
 ] as const;
 
 function WarningIcon() {
@@ -45,63 +33,102 @@ function WarningIcon() {
   );
 }
 
+function Badge({ text, visible }: { text: string; visible: boolean }) {
+  return (
+    <div
+      className="inline-flex items-center gap-2 bg-white transition-all duration-700"
+      style={{
+        border: "1px solid #F3F3F3",
+        borderRadius: 100,
+        padding: "12px 20px",
+        opacity: visible ? 1 : 0,
+        transform: visible ? "scale(1)" : "scale(0.7)",
+        transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+      }}
+    >
+      <WarningIcon />
+      <span className="body-sm text-primary whitespace-nowrap">{text}</span>
+    </div>
+  );
+}
+
 export default function PainPointsSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [visibleBadges, setVisibleBadges] = useState<boolean[]>([false, false, false, false]);
+  const [headingVisible, setHeadingVisible] = useState(false);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const handleScroll = () => {
+      const rect = section.getBoundingClientRect();
+      const sectionTop = -rect.top;
+      const triggerStart = window.innerHeight * 0.5;
+      const triggerStep = 360;
+
+      const newVisible = PAIN_POINTS.map((_, i) => {
+        const threshold = triggerStart + i * triggerStep;
+        return sectionTop >= threshold;
+      });
+
+      setVisibleBadges(newVisible);
+      setHeadingVisible(sectionTop >= triggerStart - 100);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <section
-      className="relative bg-white text-center"
-      style={{ padding: "120px 80px", minHeight: 600 }}
+      ref={sectionRef}
+      className="relative bg-white"
+      style={{ height: 2400 }}
     >
-      <div className="relative mx-auto" style={{ maxWidth: 1440 }}>
-        {/* Warning badges — desktop */}
-        {PAIN_POINTS.map((point, i) => (
-          <ScrollReveal
-            key={point.text}
-            className={`absolute ${point.position} hidden lg:inline-flex`}
-            origin="scale"
-            delay={0.2 + i * 0.15}
-            duration={0.7}
-          >
-            <div
-              className="inline-flex items-center gap-2 bg-white"
+      {/* Sticky container — stays fixed while scrolling through triggers */}
+      <div
+        className="sticky top-0 flex items-center justify-center"
+        style={{ height: "100vh", overflow: "hidden" }}
+      >
+        <div
+          className="relative mx-auto w-full"
+          style={{ maxWidth: 1440, padding: "0 100px", height: 600 }}
+        >
+          {/* Pain point badges — positioned around the heading */}
+          {/* Top-left */}
+          <div className="absolute" style={{ top: 40, left: 100 }}>
+            <Badge text={PAIN_POINTS[0]} visible={visibleBadges[0]} />
+          </div>
+          {/* Top-right */}
+          <div className="absolute" style={{ top: 40, right: 100 }}>
+            <Badge text={PAIN_POINTS[1]} visible={visibleBadges[1]} />
+          </div>
+          {/* Bottom-left */}
+          <div className="absolute" style={{ bottom: 40, left: 140 }}>
+            <Badge text={PAIN_POINTS[2]} visible={visibleBadges[2]} />
+          </div>
+          {/* Bottom-right */}
+          <div className="absolute" style={{ bottom: 40, right: 100 }}>
+            <Badge text={PAIN_POINTS[3]} visible={visibleBadges[3]} />
+          </div>
+
+          {/* Center heading */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <h2
+              className="heading-lg text-primary text-center transition-all duration-700"
               style={{
-                border: "1px solid #F3F3F3",
-                borderRadius: 100,
-                padding: "12px 20px",
+                maxWidth: 700,
+                opacity: headingVisible ? 1 : 0,
+                transform: headingVisible ? "translateY(0)" : "translateY(30px)",
+                transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
               }}
             >
-              <WarningIcon />
-              <span className="body-sm text-primary whitespace-nowrap">
-                {point.text}
-              </span>
-            </div>
-          </ScrollReveal>
-        ))}
-
-        {/* Mobile badges — stacked */}
-        <div className="flex flex-col items-center gap-3 mb-10 lg:hidden">
-          {PAIN_POINTS.map((point, i) => (
-            <ScrollReveal key={point.text} origin="scale" delay={0.1 + i * 0.1}>
-              <div
-                className="inline-flex items-center gap-2 bg-white"
-                style={{
-                  border: "1px solid #F3F3F3",
-                  borderRadius: 100,
-                  padding: "12px 20px",
-                }}
-              >
-                <WarningIcon />
-                <span className="body-sm text-primary">{point.text}</span>
-              </div>
-            </ScrollReveal>
-          ))}
+              Eliminate the bottlenecks that hold you back
+            </h2>
+          </div>
         </div>
-
-        {/* Center heading */}
-        <ScrollReveal delay={0.5}>
-          <h2 className="heading-lg text-primary mx-auto" style={{ maxWidth: 700 }}>
-            Eliminate the bottlenecks that hold you back
-          </h2>
-        </ScrollReveal>
       </div>
     </section>
   );
